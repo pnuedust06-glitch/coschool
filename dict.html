@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>핵심 IT 및 비즈니스 용어사전</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafd; /* Lighter blue-ish grey background */
+        }
+        /* Sticky sidebar position adjusted for top padding */
+        #sidebar {
+            top: 1rem;
+        }
+        /* Style for active term button */
+        .term-button.active {
+            background-color: #e0f2fe; /* blue-100 */
+            border-color: #3b82f6; /* blue-500 */
+            color: #1d4ed8; /* blue-700 */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto p-4 md:p-8">
+        
+        <!-- Header: Added Home Link -->
+        <header class="text-center mb-8 relative">
+            <!-- Home Link: Placed absolutely in the top-left for clean access -->
+            <a href="index.html" class="absolute left-0 top-0 text-blue-500 hover:text-blue-700 font-semibold text-lg transition duration-150 p-2 rounded-lg hover:bg-blue-100/50 flex items-center">
+                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l-7 7m7-7v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3"></path></svg>
+                홈 (Home)
+            </a>
+            
+            <h1 class="text-4xl font-extrabold text-gray-900 mb-2 mt-8">핵심 IT 및 비즈니스 용어사전</h1>
+            <p class="text-xl text-gray-500">주요 개념과 트렌드를 한눈에 확인하세요</p>
+        </header>
+
+        <!-- Main Layout: Sidebar and Content -->
+        <div class="flex flex-col lg:flex-row gap-6">
+
+            <!-- Sidebar (Category Filter) -->
+            <div id="sidebar" class="w-full lg:w-1/4 p-4 bg-white rounded-xl shadow-lg h-fit sticky lg:top-8">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    카테고리 필터
+                </h2>
+                <div id="category-list" class="space-y-2">
+                    <!-- Categories will be rendered here by JS -->
+                </div>
+            </div>
+
+            <!-- Content Area (Search, Term List, and Detail View) -->
+            <div class="w-full lg:w-3/4">
+                <!-- Search Bar -->
+                <div class="mb-6 p-4 bg-white rounded-xl shadow-lg">
+                    <input type="text" id="search-input" placeholder="용어, 정의, 또는 키워드를 검색하세요..."
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 text-lg"
+                           oninput="filterGlossary()">
+                </div>
+
+                <!-- Content: Term List (Left) and Detail View (Right) -->
+                <div class="flex flex-col md:flex-row gap-6">
+                    
+                    <!-- Term List Container -->
+                    <div id="term-list-container" class="w-full md:w-1/2 bg-white rounded-xl shadow-lg p-4 overflow-hidden h-[60vh] flex flex-col">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-3 border-b pb-2">용어 목록</h3>
+                        <div id="term-list" class="space-y-1 overflow-y-auto flex-grow">
+                            <!-- Clickable term buttons will be rendered here by JS -->
+                        </div>
+                        
+                        <!-- No Results Message (Hidden by default) -->
+                        <div id="no-results" class="hidden text-center py-10">
+                            <p class="text-base text-gray-500">
+                                <svg class="w-8 h-8 mx-auto mb-2 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                검색 결과가 없습니다.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Detail View Container -->
+                    <div id="detail-container" class="w-full md:w-1/2">
+                        <div id="term-detail" class="bg-white p-6 rounded-xl shadow-xl border-l-4 border-blue-500 min-h-[60vh]">
+                            <!-- Initial Message or Detail Content -->
+                            <p class="text-xl text-blue-500 font-bold mb-3">용어 설명을 보려면:</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li>왼쪽 카테고리 필터에서 분류를 선택합니다.</li>
+                                <li>용어 목록에서 원하는 항목을 클릭합니다.</li>
+                                <li>검색창을 이용하여 용어를 찾을 수도 있습니다.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GLOSSARY_DATA = [
+            { term: "Fintech (핀테크)", definition: "금융(Finance)과 기술(Technology)의 **융복합(convergence)**을 의미하며, 기존 금융 서비스에 IT를 결합한 간편결제, 송금, 자산관리 등을 목적으로 한다 (핀테크 1.0).", category: "금융 및 핀테크" },
+            { term: "Techfin (테크핀)", definition: "정보기술(IT)을 기반으로 새로운 금융 서비스를 결합하는 **포괄적인 개념**을 의미하며, 인터넷 전문은행이나 혁신적인 금융 서비스를 제공하는 스타트업 등 더 나은 금융 서비스를 제공하기 위해 IT 기술을 접목하는 기업을 통칭한다.", category: "금융 및 핀테크" },
+            { term: "간편결제 시스템", definition: "사용자들이 온라인 및 오프라인에서 **신속하고 쉽게 결제**할 수 있도록 지원하는 전자 결제 방식이다. 빠른 결제 프로세스와 높은 보안성 등의 장점을 제공한다.", category: "금융 및 핀테크" },
+            { term: "로보어드바이저 (Robo-Adviser)", definition: "**빅데이터와 인공지능 알고리즘** 기반으로 고객에게 온라인상으로 자산배분(asset allocation) 포트폴리오를 관리해주는 금융자문서비스이다. 인공지능을 통해 투자 경험을 반복적으로 학습시켜 맞춤형 투자자문과 자산운용을 수행하며, 주로 **상장지수펀드(ETF)**를 활용한 분산투자로 **중위험·중수익**을 추구한다.", category: "금융 및 핀테크" },
+            { term: "인슈어테크 (InsurTech)", definition: "**보험(Insurance)과 기술(Technology)의 합성어**로, 기술을 활용하여 보험 산업의 **효율성 및 고객 경험을 향상**시키는 것을 목표로 한다. 주요 기술로는 인공지능, 빅데이터, 블록체인, 사물인터넷(IoT) 등이 활용된다.", category: "금융 및 핀테크" },
+            { term: "P2P 금융 플랫폼 (Peer to Peer)", definition: "금융회사의 중개 없이 사적 **개인 간에 금융거래가 체결**될 수 있도록 중개하는 금융플랫폼이다. P2P 대출 중개 플랫폼 등이 대표적이다.", category: "금융 및 핀테크" },
+            { term: "오픈뱅킹 (Open Banking)", definition: "금융 데이터와 서비스를 **안전하게 공유**할 수 있도록 개방된 표준을 통해 금융 기관과 제3자 간의 협력을 촉진하는 시스템이다.", category: "금융 및 핀테크" },
+            { term: "마이데이터 (MyData)", definition: "데이터 관리와 활용 **권한이 정보주체인 개인에게 있음**을 강조하는 개념이다. 은행, 카드, 보험, 통신 등 흩어져 있는 개인 금융 정보를 통합 관리하여 최적화된 상품 추천 및 재무 컨설팅을 지원하는 서비스이다.", category: "금융 및 핀테크" },
+            { term: "마이데이터 원칙", definition: "개인에게 데이터 접근, 이동, 활용 등에 대한 **권한** (통제권 및 자기결정권)을 부여하고, 데이터를 보유한 기관은 안전한 환경에서 데이터를 **제공**하며, 활용 결과를 개인이 투명하게 알 수 있도록 **활용**하는 것이다.", category: "금융 및 핀테크" },
+            { term: "CSR (기업의 사회적 책임)", definition: "기업 수익의 일부를 사회에 환원시킴으로써 기업의 책임을 대신하는 개념으로, 주로 **자선 활동**과 같은 선행으로 취약계층의 요청에 응답하는 형태로 진행된다.", category: "기업 경영 및 윤리" },
+            { term: "CSV (공유가치창출)", definition: "사회의 근원적 문제점 해결을 통해 기업 이익의 **동반 성장을 꾀하는 경영철학**이다. 경제적 가치, 사회적 가치, 문화적 가치로써 합리적 배분을 통한 균형 성장을 추구하며, 새로운 가치 창출을 통한 사회와 기업의 동반성장을 유도한다.", category: "기업 경영 및 윤리" },
+            { term: "ESG", definition: "**환경(Environmental)적 요인, 사회적 책임(Social), 거버넌스(Governance)의 투명경영**을 의미한다. CSR과 CSV의 **확장 개념**으로서, 더 이상 선택이 아닌 필수로 자리매김 중인 사회적 가치 창출 경영의 중심 화두이다.", category: "기업 경영 및 윤리" },
+            { term: "4차 산업혁명 (4th IR)", definition: "**빅데이터 기반 디지털 전환**, **가상세계와 현실세계의 융복합**, **사이버 물리 시스템(CPS)**과 같은 초연결 사회의 데이터 분석을 통한 **가치 창출**이 핵심이다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "디지털 전환 (DT, DX)", definition: "디지털과 물리적 요소들의 통합으로 **비즈니스 모델을 변화하고 새롭게 정립**하는 것. AI, Cloud, Data 등 디지털 기술을 기반으로 조직문화, 비즈니스 모델 및 산업생태계를 혁신하고 새로운 가치를 창출하는 과정이다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "디지로그 (Digilog)", definition: "**디지털(digital) 기술에 아날로그(analog) 감성을 결합**한 형태의 제품 및 서비스를 뜻하며, 기술과 감성의 공존을 의미한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "CPS (사이버 물리 시스템)", definition: "컴퓨팅과 물리세계가 융합되어 **자동화, 지능화**되는 시스템이며, IoT 기반 온오프라인의 초연결 사회로 실물경제 기반의 제조공법 최적화를 가능하게 한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "DNA", definition: "4차 산업혁명 핵심 키워드 중 하나로, **Big Data, Network, AI**를 뜻한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "ABC", definition: "4차 산업혁명 핵심 키워드 중 하나로, **AI, Big data, Cloud computing**을 뜻한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "ICBM", definition: "4차 산업혁명 핵심 키워드 중 하나로, **IoT, Cloud computing, Big data, Mobility**를 뜻한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "O2O (On-line to Off-line)", definition: "오프라인에서 온라인으로 전환을 유도하는 전략의 용어이다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "O4O (On-line for Off-line)", definition: "온라인에 축적된 데이터를 활용하여 오프라인에서 새로운 비즈니스 모델을 적용하는 전략이다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "클라우드 컴퓨팅 (Cloud Computing)", definition: "인터넷상의 클라우드를 통하여 H/W, S/W 등의 컴퓨팅 자원을 **필요한 만큼 빌려 쓰고 사용한 만큼 요금을 지급**하는 방식의 서비스. 가장 큰 장점 중 하나는 비용 절감의 실현이다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "SaaS", definition: "클라우드 컴퓨팅 서비스 모델 중 **Software as a Service**의 약자로, 인터넷으로 소프트웨어 서비스를 제공한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "IaaS", definition: "클라우드 컴퓨팅 서비스 모델 중 **Infra as a service**의 약자로, 서버, 스토리지 시스템 자원을 제공한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "PaaS", definition: "클라우드 컴퓨팅 서비스 모델 중 **Platform as a service**의 약자로, 개발 실행을 위한 플랫폼을 제공한다.", category: "4차 산업혁명 및 디지털 전환" },
+            { term: "데이터 (Data)", definition: "**의미 있는 단순한 사실들의 집합**이다.", category: "데이터 및 정보 시스템" },
+            { term: "정보 (Information)", definition: "**해석할 수 있는 의미와 가치를 가진 자료**이다.", category: "데이터 및 정보 시스템" },
+            { term: "빅데이터 (Big Data)", definition: "정형, 반정형, 비정형 데이터를 모두 포함하며, 기존 데이터베이스 관리 도구의 역량을 넘어서는 **대용량 데이터 세트**를 지칭한다. 빅데이터 분석의 궁극적인 목적은 **가치 창출**이다.", category: "데이터 및 정보 시스템" },
+            { term: "빅데이터 5V", definition: "빅데이터의 특징을 설명하는 요소로, **Volume** (규모, 양), **Velocity** (속도), **Variety** (다양성), **Value** (가치), **Variable** (다차원변수)를 포함한다.", category: "데이터 및 정보 시스템" },
+            { term: "TPS (거래처리시스템)", definition: "경영에 필요한 **일상적인 거래 수행**을 지원하는 시스템으로, 정보시스템 계층 중 가장 하위에 위치한다.", category: "데이터 및 정보 시스템" },
+            { term: "MIS (경영정보시스템)", definition: "조직 내의 운용과 경영을 위한 정보를 제공하는 네트워크 시스템이며, 조직의 현재 성과 제공 및 경영활동 관리감독을 지원한다.", category: "데이터 및 정보 시스템" },
+            { term: "DSS (의사결정지원시스템)", definition: "비일상적인 의사결정을 지원하는 시스템.", category: "데이터 및 정보 시스템" },
+            { term: "ESS (중역지원시스템)", definition: "판단, 평가, 통찰력이 절대적으로 요구되는 **비일상적인 의사결정**을 지원하는 시스템. 최고경영자의 의사결정을 지원하는 시스템이다.", category: "데이터 및 정보 시스템" },
+            { term: "메타 데이터 (Meta Data)", definition: "**데이터에 대한 정보**를 담고 있는 데이터를 지칭하며, 파일의 위치, 크기, 소유자 등의 정보를 기록한다.", category: "데이터 및 정보 시스템" },
+            { term: "DW (Data Warehouse)", definition: "데이터 추출, 변환, 통합, 요약된 **데이터의 통합 저장소**를 지칭한다.", category: "데이터 및 정보 시스템" },
+            { term: "DM (Data Mart)", definition: "**소규모로 구축된 데이터웨어하우스**를 지칭한다.", category: "데이터 및 정보 시스템" },
+            { term: "OLTP (On-Line Transaction Processing)", definition: "비즈니스 업무 처리 과정에서 발생하는 데이터 처리이며, 단순한 거래 처리 및 현황 파악이 목적이다.", category: "데이터 및 정보 시스템" },
+            { term: "OLAP (On-Line Analytical Processing)", definition: "End-user가 다양한 분석을 하고 의사결정을 하기 위해 요구하는 **다차원 정보의 제공**을 의미하며, DW에 저장된다.", category: "데이터 및 정보 시스템" },
+            { term: "참조 무결성 (Integrity)", definition: "관계형 데이터베이스에서 데이터의 **정확성과 일관성**을 뜻하는 용어로, 결손과 부정함이 없음을 보증한다.", category: "데이터 및 정보 시스템" },
+            { term: "형식지 (Explicit knowledge)", definition: "언어로 명시할 수 있는 **객관적이고 형식적인 지식** (예: 데이터 정책, 문서 등).", category: "데이터 및 정보 시스템" },
+            { term: "암묵지 (tacit knowledge)", definition: "**개인적인 경험**에 의해 얻어지는, 말로 표현하기 어려운 함축적이고 노하우가 있는 지식이다.", category: "데이터 및 정보 시스템" },
+            { term: "AI (인공지능)", definition: "컴퓨터 프로그램이 인간의 학습능력, 판단 능력, 추론, 지각 능력 등 **인간의 지적인 능력을 구현한 기술 분야**이다. 데이터를 기반으로 판단하고 학습하며, 복잡한 작업을 자동화하고 최적화하는 데 사용된다.", category: "인공지능 및 컴퓨팅" },
+            { term: "머신러닝 (Machine Learning, ML)", definition: "인간의 학습 능력과 같은 기능을 컴퓨터에 부여하기 위한 기술로, 데이터를 기반으로 패턴을 학습하고 예측을 수행한다.", category: "인공지능 및 컴퓨팅" },
+            { term: "딥러닝 (Deep Learning, DL)", definition: "머신러닝 방법 중, **신경망 기법**을 적용하여 빅데이터를 기반으로 **스스로 학습하며 판단**하는 기술이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "지도 학습 (Supervised Learning)", definition: "**정답이 있는 데이터**로 학습을 시켜 데이터 분류 및 올바른 결과 예측을 수행하는 방식이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "비지도 학습 (Unsupervised Learning)", definition: "**정답이 없는 데이터**로 학습을 시켜 데이터의 유의미한 패턴이나 구조를 발견하는 방식이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "강화 학습 (Reinforcement Learning)", definition: "기계가 성공과 실패의 **시행착오를 통해 스스로 문제 해결**하며, 행동에 대한 보상을 통해 누적 보상을 최대화하는 의사결정을 학습하는 방식이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "퍼셉트론 (Perceptron)", definition: "**다수의 입력 신호**를 받아 **하나의 신호로 출력**하는 것을 뜻한다.", category: "인공지능 및 컴퓨팅" },
+            { term: "과적합 (Overfitting)", definition: "모델이 학습 데이터에 **지나치게 적응**하여 새로운 데이터에 대한 일반화 성능이 떨어지는 현상.", category: "인공지능 및 컴퓨팅" },
+            { term: "챗봇 (Chatbot)", definition: "**자연어 처리(NLP) 기술**을 이용해 사람과 대화할 수 있는 소프트웨어 애플리케이션이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "생성형 AI (Generative AI)", definition: "**챗GPT**와 같이 몇 가지 원리로 **자연어 문장을 만들어 내는 능력**을 갖춘 AI를 지칭한다.", category: "인공지능 및 컴퓨팅" },
+            { term: "ChatGPT", definition: "**실시간 대화형 인공지능 챗봇** 기술로, 사용자와 주고 받는 대화에서 질문에 답하도록 설계된 자연어 처리 모델이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "Web 3.0", definition: "**공정과 자율**을 지향하며 **탈중앙화(분산화)된 방식**의 기술이다. 지능화된 웹이 개인 맞춤형 콘텐츠를 제공하는 Semantic(시맨틱) 기반 기술이며, 메타버스, 블록체인 등과 연계된다.", category: "인공지능 및 컴퓨팅" },
+            { term: "디지털 트윈 (Digital Twin)", definition: "컴퓨터에 **현실 속 쌍둥이 모델을 만들어 미리 예측** 기능을 수행하는 기술. 실시간 데이터를 사용하여 업데이트되며, 의사결정을 돕는 시스템의 가상 모델이다.", category: "인공지능 및 컴퓨팅" },
+            { term: "캄테크 (Calm-tech)", definition: "AI, IoT 등 사람들이 **인지하지 못한 상태**에서 서비스를 제공하는, 보이지 않는 배려 기술을 지칭한다.", category: "인공지능 및 컴퓨팅" },
+            { term: "YOLO", definition: "2017년 키워드. **You Only Live Once**의 약자로, 미래에 대한 기대를 접고 이 순간을 사랑하려는 긍정적인 소비 성향이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "소확행", definition: "2018년 키워드. **소소하지만 확실한 행복**을 추구하는 성향이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "워라밸 (Work-Life-Balance)", definition: "2018년 키워드. 일과 삶의 균형을 중요시하며, 적당히 벌면서 아주 잘 살기를 희망하는 태도이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "뉴트로 (New-tro)", definition: "2019년 키워드. **새로운 복고**를 의미하며, 옛날 감성에 새로운 해석을 더하는 현상이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "멀티 페르소나 (Multi Persona)", definition: "2020년 키워드. 복수의 가면을 뜻하며, 양면적인 소비 행태와 정체성 추구를 통해 고객 세분화 및 맞춤화 전략의 필요성을 대두시킨다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "온택트 (Ontact)", definition: "2021년 키워드. **Online + Untact**의 합성어로, 팬데믹 시대 온라인을 통한 비대면 시장의 활성화 현상을 뜻한다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "나노사회 (Nano Society)", definition: "2022년 키워드. 극소 단위로 파편화된 사회 변화를 지칭하며, 개인화되는 메가트렌드에 팬데믹으로 인한 사회적 거리두기가 가속화되어 홀로 살아남는 양상이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "체리슈머 (Cherry-sumers)", definition: "한정된 자원을 극대화하기 위해 **최대한 알뜰하게 소비하는 전략적 소비자**를 일컫는다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "알파세대 (Alpha Generation)", definition: "2023년 키워드 (2010년~2024년생으로 추산). 순수 **디지털 네이티브 세대**로 소비 지형을 바꿀 주역이며, 역사상 가장 규모가 큰 가상 세대이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "CX 유니버스 (Customer eXperience Universe)", definition: "고객경험(CX)을 최적화하고 관리함으로써 신뢰, 몰입, 충성까지 가는 여정을 관리하는 전략. 고객관계관리(CRM)의 확장 개념으로 충성도를 높이는 전략이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "라스트핏 이코노미 (Last Fit Economy)", definition: "배송, 이동, 구매 여정의 **마지막 순간의 만족을 극대화**하는 것을 추구하며, 마지막 순간의 경험이 중요해지는 현상이다.", category: "소비자 및 마케팅 트렌드" },
+            { term: "데이터 인텔리전스 (Data Intelligence)", definition: "의사결정의 패러다임이 데이터에 근거하여 **지능화된다**는 의미의 용어이다.", category: "소비자 및 마케팅 트렌드" }
+        ];
+
+        let currentCategory = 'All';
+        let currentActiveButton = null;
+
+        /**
+         * Converts Markdown-style bold text (**text**) to HTML bold text (<b>text</b>).
+         * @param {string} text 
+         * @returns {string} HTML string
+         */
+        function parseMarkdownToHtml(text) {
+            // Replace **text** with <b>text</b>
+            return text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        }
+
+        /**
+         * Renders the clickable term list based on filtered data.
+         * @param {Array<Object>} filteredData 
+         */
+        function renderTermList(filteredData) {
+            const listElement = document.getElementById('term-list');
+            const noResultsElement = document.getElementById('no-results');
+            const termDetailElement = document.getElementById('term-detail');
+
+            listElement.innerHTML = '';
+            currentActiveButton = null;
+
+            // Clear term detail and show initial message when list changes
+            termDetailElement.innerHTML = `
+                <p class="text-xl text-blue-500 font-bold mb-3">용어 설명을 보려면:</p>
+                <ul class="list-disc list-inside text-gray-600 space-y-2">
+                    <li>왼쪽 카테고리 필터에서 분류를 선택합니다.</li>
+                    <li>용어 목록에서 원하는 항목을 클릭합니다.</li>
+                    <li>검색창을 이용하여 용어를 찾을 수도 있습니다.</li>
+                </ul>
+            `;
+
+            if (filteredData.length === 0) {
+                noResultsElement.classList.remove('hidden');
+                return;
+            } else {
+                noResultsElement.classList.add('hidden');
+            }
+
+            filteredData.forEach(item => {
+                const button = document.createElement('button');
+                button.className = 'term-button w-full text-left p-3 rounded-lg border border-gray-100 bg-white hover:bg-blue-50 transition duration-150 ease-in-out text-gray-800 font-medium truncate';
+                button.textContent = item.term;
+                button.onclick = () => showTermDetail(item.term, button);
+                listElement.appendChild(button);
+            });
+        }
+
+        /**
+         * Finds a term and displays its details in the detail view.
+         * @param {string} termName 
+         * @param {HTMLElement} element 
+         */
+        function showTermDetail(termName, element) {
+            const termDetailElement = document.getElementById('term-detail');
+            const selectedItem = GLOSSARY_DATA.find(item => item.term === termName);
+
+            if (!selectedItem) {
+                termDetailElement.innerHTML = `<p class="text-red-500">오류: 용어를 찾을 수 없습니다.</p>`;
+                return;
+            }
+            
+            // 1. Update active state in list
+            if (currentActiveButton) {
+                currentActiveButton.classList.remove('active');
+            }
+            element.classList.add('active');
+            currentActiveButton = element;
+            
+            // 2. Render details
+            const definitionHtml = parseMarkdownToHtml(selectedItem.definition);
+
+            termDetailElement.innerHTML = `
+                <span class="text-sm px-3 py-1 bg-blue-500 text-white font-medium rounded-full mb-3 inline-block">${selectedItem.category}</span>
+                <h3 class="text-3xl font-extrabold text-gray-900 mb-4">${selectedItem.term}</h3>
+                <p class="text-lg text-gray-700 leading-loose">${definitionHtml}</p>
+            `;
+        }
+
+        /**
+         * Handles filtering by search input and current category.
+         */
+        function filterGlossary() {
+            const searchInput = document.getElementById('search-input').value.toLowerCase().trim();
+
+            let filteredData = GLOSSARY_DATA;
+
+            // 1. Filter by Category
+            if (currentCategory !== 'All') {
+                filteredData = filteredData.filter(item => item.category === currentCategory);
+            }
+
+            // 2. Filter by Search Term (term or definition)
+            if (searchInput) {
+                filteredData = filteredData.filter(item => 
+                    item.term.toLowerCase().includes(searchInput) ||
+                    item.definition.toLowerCase().includes(searchInput)
+                );
+            }
+
+            // 3. Render the results (only the list of terms now)
+            renderTermList(filteredData);
+        }
+
+        /**
+         * Sets the active category and triggers filtering.
+         * @param {string} category 
+         * @param {HTMLElement} element 
+         */
+        function setCategory(category, element) {
+            currentCategory = category;
+
+            // Update active state in UI for category buttons
+            const categoryButtons = document.querySelectorAll('#category-list button');
+            categoryButtons.forEach(btn => btn.classList.remove('bg-blue-500', 'text-white', 'hover:bg-blue-600'));
+            categoryButtons.forEach(btn => btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200'));
+
+            if (element) {
+                element.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                element.classList.add('bg-blue-500', 'text-white', 'hover:bg-blue-600');
+            }
+
+            // Run the main filter
+            filterGlossary();
+        }
+
+        /**
+         * Renders all unique categories in the sidebar.
+         */
+        function renderCategories() {
+            const categories = ['All', ...new Set(GLOSSARY_DATA.map(item => item.category))].sort();
+            const listElement = document.getElementById('category-list');
+            listElement.innerHTML = '';
+
+            categories.forEach(category => {
+                const button = document.createElement('button');
+                button.className = `w-full text-left px-4 py-2 rounded-lg font-medium transition duration-150 ease-in-out text-sm ${category === 'All' ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`;
+                button.textContent = category === 'All' ? '전체 보기' : category;
+                button.onclick = (e) => setCategory(category, e.target);
+                listElement.appendChild(button);
+            });
+        }
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            // Start by filtering, which also renders the term list and initial detail message
+            setCategory('All', document.querySelector('#category-list button')); 
+        });
+    </script>
+</body>
+</html>
