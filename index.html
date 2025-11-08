@@ -60,39 +60,59 @@
             <div class="grid md:grid-cols-2 gap-6">
 
                 <!-- 용어 카드 1 (주식) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02]">
-                    <h3 class="text-2xl font-bold text-indigo-600 mb-3">주식 (Stock)</h3>
-                    <p class="text-gray-500 text-sm mb-4 border-b pb-2">기본 금융 상품</p>
-                    <p class="text-gray-700 leading-relaxed">
-                        기업의 자본을 이루는 단위로서, 주식회사의 소유권을 나타내는 증권입니다. 주식을 소유한 사람은 주주로서 기업의 이익 배당, 의결권 등 권리를 가집니다.
-                    </p>
+                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] cursor-pointer" onclick="toggleContent('term1')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-3">주식 (Stock)</h3>
+                        <span id="icon-term1" class="text-indigo-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="term1" class="hidden">
+                        <p class="text-gray-500 text-sm mb-4 border-b pb-2">기본 금융 상품</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            기업의 자본을 이루는 단위로서, 주식회사의 소유권을 나타내는 증권입니다. 주식을 소유한 사람은 주주로서 기업의 이익 배당, 의결권 등 권리를 가집니다.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- 용어 카드 2 (채권) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02]">
-                    <h3 class="text-2xl font-bold text-indigo-600 mb-3">채권 (Bond)</h3>
-                    <p class="text-gray-500 text-sm mb-4 border-b pb-2">금융시장과 투자</p>
-                    <p class="text-gray-700 leading-relaxed">
-                        정부, 공공기관, 특수법인 등이 자금 조달을 위해 발행하는 일종의 '차용증서'입니다. 만기일에 원금을 상환하고, 그 전까지 이자를 지급합니다.
-                    </p>
+                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] cursor-pointer" onclick="toggleContent('term2')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-3">채권 (Bond)</h3>
+                        <span id="icon-term2" class="text-indigo-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="term2" class="hidden">
+                        <p class="text-gray-500 text-sm mb-4 border-b pb-2">금융시장과 투자</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            정부, 공공기관, 특수법인 등이 자금 조달을 위해 발행하는 일종의 '차용증서'입니다. 만기일에 원금을 상환하고, 그 전까지 이자를 지급합니다.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- 용어 카드 3 (인플레이션) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02]">
-                    <h3 class="text-2xl font-bold text-indigo-600 mb-3">인플레이션 (Inflation)</h3>
-                    <p class="text-gray-500 text-sm mb-4 border-b pb-2">거시경제 지표</p>
-                    <p class="text-gray-700 leading-relaxed">
-                        한 나라의 물가가 지속적으로 오르는 현상으로, 화폐의 구매력이 하락하는 것을 의미합니다. 금융 정책 결정의 중요한 요소입니다.
-                    </p>
+                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] cursor-pointer" onclick="toggleContent('term3')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-3">인플레이션 (Inflation)</h3>
+                        <span id="icon-term3" class="text-indigo-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="term3" class="hidden">
+                        <p class="text-gray-500 text-sm mb-4 border-b pb-2">거시경제 지표</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            한 나라의 물가가 지속적으로 오르는 현상으로, 화폐의 구매력이 하락하는 것을 의미합니다. 금융 정책 결정의 중요한 요소입니다.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- 용어 카드 4 (분산투자) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02]">
-                    <h3 class="text-2xl font-bold text-indigo-600 mb-3">분산투자 (Diversification)</h3>
-                    <p class="text-gray-500 text-sm mb-4 border-b pb-2">위험 관리 원칙</p>
-                    <p class="text-gray-700 leading-relaxed">
-                        투자 자금을 여러 자산이나 종목에 나누어 투자함으로써 특정 투자처의 손실 위험을 줄이는 투자 기법입니다. '달걀을 한 바구니에 담지 마라'는 원칙입니다.
-                    </p>
+                <div class="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] cursor-pointer" onclick="toggleContent('term4')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-indigo-600 mb-3">분산투자 (Diversification)</h3>
+                        <span id="icon-term4" class="text-indigo-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="term4" class="hidden">
+                        <p class="text-gray-500 text-sm mb-4 border-b pb-2">위험 관리 원칙</p>
+                        <p class="text-gray-700 leading-relaxed">
+                            투자 자금을 여러 자산이나 종목에 나누어 투자함으로써 특정 투자처의 손실 위험을 줄이는 투자 기법입니다. '달걀을 한 바구니에 담지 마라'는 원칙입니다.
+                        </p>
+                    </div>
                 </div>
 
                 <!-- 더 많은 용어는 이 위치에 추가하세요 -->
@@ -112,39 +132,54 @@
             <div class="space-y-6">
 
                 <!-- 핵심 정리 주제 1 (화폐의 시간 가치) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl border-l-4 border-green-500">
-                    <h3 class="text-2xl font-bold text-green-700 mb-3">핵심 1: 화폐의 시간 가치 (Time Value of Money)</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        **핵심 개념:** 현재 손에 있는 1만원이 1년 뒤의 1만원보다 더 가치가 높다는 원리입니다. 인플레이션과 이자율로 인해 미래 가치는 현재 가치보다 낮아지게 됩니다.
-                    </p>
-                    <ul class="list-disc list-inside text-sm text-gray-500 mt-3 ml-4 space-y-1">
-                        <li>**미래 가치(FV):** 현재 돈이 미래에 얼마나 불어날지 계산 (복리 효과)</li>
-                        <li>**현재 가치(PV):** 미래의 돈을 현재 기준으로 환산하여 계산 (할인율 적용)</li>
-                    </ul>
+                <div class="bg-white p-6 rounded-lg shadow-xl border-l-4 border-green-500 cursor-pointer" onclick="toggleContent('core1')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-green-700 mb-3">핵심 1: 화폐의 시간 가치 (Time Value of Money)</h3>
+                        <span id="icon-core1" class="text-green-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="core1" class="hidden">
+                        <p class="text-gray-600 leading-relaxed mt-4">
+                            **핵심 개념:** 현재 손에 있는 1만원이 1년 뒤의 1만원보다 더 가치가 높다는 원리입니다. 인플레이션과 이자율로 인해 미래 가치는 현재 가치보다 낮아지게 됩니다.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-500 mt-3 ml-4 space-y-1">
+                            <li>**미래 가치(FV):** 현재 돈이 미래에 얼마나 불어날지 계산 (복리 효과)</li>
+                            <li>**현재 가치(PV):** 미래의 돈을 현재 기준으로 환산하여 계산 (할인율 적용)</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- 핵심 정리 주제 2 (위험과 수익의 상충관계) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl border-l-4 border-green-500">
-                    <h3 class="text-2xl font-bold text-green-700 mb-3">핵심 2: 위험과 수익의 상충관계 (Risk-Return Trade-off)</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        **핵심 개념:** 금융 투자는 항상 위험(Risk)과 수익(Return)이 함께 움직인다는 원칙입니다. 투자자가 높은 수익률을 원한다면, 그만큼 더 큰 손실 가능성(위험)을 감수해야 합니다.
-                    </p>
-                    <ul class="list-disc list-inside text-sm text-gray-500 mt-3 ml-4 space-y-1">
-                        <li>**위험의 종류:** 시장 위험, 신용 위험, 유동성 위험 등</li>
-                        <li>**위험 관리:** 분산 투자와 헤징(Hedging)을 통해 위험을 줄이는 방법 학습</li>
-                    </ul>
+                <div class="bg-white p-6 rounded-lg shadow-xl border-l-4 border-green-500 cursor-pointer" onclick="toggleContent('core2')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-green-700 mb-3">핵심 2: 위험과 수익의 상충관계 (Risk-Return Trade-off)</h3>
+                        <span id="icon-core2" class="text-green-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="core2" class="hidden">
+                        <p class="text-gray-600 leading-relaxed mt-4">
+                            **핵심 개념:** 금융 투자는 항상 위험(Risk)과 수익(Return)이 함께 움직인다는 원칙입니다. 투자자가 높은 수익률을 원한다면, 그만큼 더 큰 손실 가능성(위험)을 감수해야 합니다.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-500 mt-3 ml-4 space-y-1">
+                            <li>**위험의 종류:** 시장 위험, 신용 위험, 유동성 위험 등</li>
+                            <li>**위험 관리:** 분산 투자와 헤징(Hedging)을 통해 위험을 줄이는 방법 학습</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- 핵심 정리 주제 3 (개인 재무 계획의 중요성) -->
-                <div class="bg-white p-6 rounded-lg shadow-xl border-l-4 border-green-500">
-                    <h3 class="text-2xl font-bold text-green-700 mb-3">핵심 3: 합리적인 개인 재무 계획 수립</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        **핵심 개념:** 목표 설정, 현금 흐름 분석, 예산 수립, 투자 및 보험 설계 등을 통해 개인의 재정 상태를 건전하게 유지하고 목표를 달성하는 과정입니다. 학생으로서의 소비 습관의 중요성을 배웁니다.
-                    </p>
-                    <ul class="list-disc list-inside text-sm text-gray-500 mt-3 ml-4 space-y-1">
-                        <li>**4단계:** 목표 설정 → 현 상태 분석 → 실행 → 재검토</li>
-                        <li>**소비 관리:** 꼭 필요한 지출(Needs)과 원하는 지출(Wants) 구분하기</li>
-                    </ul>
+                <div class="bg-white p-6 rounded-lg shadow-xl border-l-4 border-green-500 cursor-pointer" onclick="toggleContent('core3')">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-green-700 mb-3">핵심 3: 합리적인 개인 재무 계획 수립</h3>
+                        <span id="icon-core3" class="text-green-500 font-extrabold text-2xl mb-3">+</span>
+                    </div>
+                    <div id="core3" class="hidden">
+                        <p class="text-gray-600 leading-relaxed mt-4">
+                            **핵심 개념:** 목표 설정, 현금 흐름 분석, 예산 수립, 투자 및 보험 설계 등을 통해 개인의 재정 상태를 건전하게 유지하고 목표를 달성하는 과정입니다. 학생으로서의 소비 습관의 중요성을 배웁니다.
+                        </p>
+                        <ul class="list-disc list-inside text-sm text-gray-500 mt-3 ml-4 space-y-1">
+                            <li>**4단계:** 목표 설정 → 현 상태 분석 → 실행 → 재검토</li>
+                            <li>**소비 관리:** 꼭 필요한 지출(Needs)과 원하는 지출(Wants) 구분하기</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- 더 많은 핵심 정리는 이 위치에 추가하세요 -->
@@ -199,6 +234,29 @@
             <p class="text-xs mt-1">제작 지원: PNU 교과연계형 프로그램</p>
         </div>
     </footer>
+
+    <!-- JavaScript for Toggle Functionality -->
+    <script>
+        /**
+         * 지정된 ID의 콘텐츠 요소의 표시 상태를 토글하고,
+         * 연결된 아이콘을 변경합니다.
+         * @param {string} contentId - 토글할 콘텐츠의 ID (예: 'term1', 'core1')
+         */
+        function toggleContent(contentId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById('icon-' + contentId);
+            
+            if (content.classList.contains('hidden')) {
+                // 내용을 표시합니다.
+                content.classList.remove('hidden');
+                icon.textContent = '-';
+            } else {
+                // 내용을 숨깁니다.
+                content.classList.add('hidden');
+                icon.textContent = '+';
+            }
+        }
+    </script>
 
 </body>
 </html>
